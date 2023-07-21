@@ -78,7 +78,7 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
 
         /// As a string slice.
         ///
-        /// Useful for formatting and coersing into functions
+        /// Useful for formatting and coercing into functions
         ///
         /// ## Example
         /// ```zig
