@@ -120,9 +120,9 @@ To add to your Zig project, create a `lib/` directory and either:
 - download this repo straight into `lib/smlstr`
 - add it as a git submodule with:
 
-    ```bash
-    git submodule add https://github.com/sonro/smlstr.git lib/smlstr
-    ```
+  ```bash
+  git submodule add https://github.com/sonro/smlstr.git lib/smlstr
+  ```
 
 Add it as a module in your `build.zig`:
 
@@ -158,19 +158,19 @@ Add it as a module in your `build.zig`:
 
 Make sure you use it to test it's working:
 
- ```zig
- // main.zig
- const std = @import("std");
- const SmlStr = @import"("smlstr").SmlStr;
+```zig
+// main.zig
+const std = @import("std");
+const SmlStr = @import("smlstr").SmlStr;
 
- // prints hello world
- pub fn main() !void {
+// prints hello world
+pub fn main() !void {
     var str = try SmlStr(16).from("hello");
     try str.pushStr(", world!");
     std.debug.print("{s}", .{str.slice()});
- }
- ```
+}
+```
 
 ## License
 
-This project is licenced under the [MIT license](/LICENSE).
+This project is licensed under the [MIT license](/LICENSE).
