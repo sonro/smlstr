@@ -2,7 +2,12 @@ const std = @import("std");
 const testing = std.testing;
 const dbg = std.debug.print;
 
-const SmlStr = @import("smlstr.zig").SmlStr;
+const smlstr = @import("smlstr.zig");
+const SmlStr = smlstr.SmlStr;
+const smlStrFrom = smlstr.smlStrFrom;
+const smlStrWith = smlstr.smlStrWith;
+const smlStrConcat = smlstr.smlStrConcat;
+const smlStrSizeOf = smlstr.smlStrSizeOf;
 
 test "create SmlStr from literal and append" {
     var str = try SmlStr(8).from("123");
@@ -65,6 +70,33 @@ test "append format string with error" {
         str.pushFmt("test {s}", .{"string"}),
     );
     try testing.expectEqualStrings("", str.slice());
+}
+
+test "create a comptime SmlStr from a literal" {
+    var str = smlStrFrom("test");
+    try testing.expectEqualStrings("test", str.slice());
+    try testing.expectError(error.Overflow, str.push('\n'));
+}
+
+test "create a comptime SmlStr with extra space" {
+    var str = smlStrWith("test", 5);
+    try testing.expectEqualStrings("test", str.slice());
+    try str.pushStr(" test");
+    try testing.expectEqualStrings("test test", str.slice());
+}
+
+test "create a comptime SmlStr via concat" {
+    var str = smlStrConcat("hello", "world");
+    try testing.expectEqualStrings("helloworld", str.slice());
+    try testing.expectError(error.Overflow, str.push('\n'));
+}
+
+test "create an comptime SmlStr using an example string" {
+    var str = smlStrSizeOf("hello, world");
+    try testing.expect(str.len == 0);
+    try str.pushStr("HELLO, WORLD");
+    try testing.expectEqualStrings("HELLO, WORLD", str.slice());
+    try testing.expectError(error.Overflow, str.push('\n'));
 }
 
 // UNCOMMENT TO TEST PANICS

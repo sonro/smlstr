@@ -11,6 +11,7 @@ Small Zig library for working with small strings.
   - [Functions](#functions)
   - [Error](#errors)
   - [Unbound](#unbound)
+  - [Comptime Functions](#comptime-functions)
   - [Importing into a Zig project](#importing-into-a-zig-project)
 - [Contributing](#contributing)
 - [License](#license)
@@ -133,6 +134,47 @@ fn idxFileRankStr(idx: usize) SmlStr(2) {
     return str;
 }
 ```
+
+### Comptime Functions
+
+All of these functions return a `SmlStr` with a capacity determined by their
+arguments.
+
+- `smlStrFrom` copying an existing string and capacity set to its length.
+
+  ```zig
+  // appending to this string will cause an overflow error
+  const str = smlStrFrom("foobar");
+  std.testing.expectEqualStrings("foobar", str.slice());
+  ```
+
+- `smlStrWith` copying an existing string and capacity set to its length +
+  defined extra space.
+
+  ```zig
+  var str = smlStrWith("answer: ", 2);
+  var answer = 42;
+  try str.pushFmt("{}", answer);
+  try std.testing.expectEqualStrings("answer: 42", str.slice());
+  ```
+
+- `smlStrConcat` copying two existing strings and capacity set to the sum of
+  their lengths.
+
+  ```zig
+  // appending to this string will cause an overflow error
+  var str = smlStrConcat("hello", "there");
+  try std.testing.expectEqualStrings("hellothere", str.slice());
+  ```
+
+- `smlStrSizeOf` capacity set to the example string's length without copying it.
+
+  ```zig
+  var str = smlStrSizeOf("General Kenobi");
+  try std.testing.expect(0 == str.len);
+  try str.pushStr("Luke Skywalker");
+  try std.testing.expectEqualStrings("Luke Skywalker", str.slice());
+  ```
 
 ### Importing into a Zig Project
 

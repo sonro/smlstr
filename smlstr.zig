@@ -180,6 +180,38 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
     };
 }
 
+/// Create a `SmlStr` from copying a `comptime` string slice.
+/// Its capacity will be equal to the string's length.
+pub fn smlStrFrom(comptime str: []const u8) SmlStr(str.len) {
+    return SmlStr(str.len).ubFrom(str);
+}
+
+/// Create a `SmlStr` from copying a `comptime` string slice.
+/// Its capacity will be equal to the string's length + `extra`.
+pub fn smlStrWith(
+    comptime str: []const u8,
+    comptime extra: usize,
+) SmlStr(str.len + extra) {
+    return SmlStr(str.len + extra).ubFrom(str);
+}
+
+/// Create a `SmlStr` from copying two `comptime` string slices.
+/// Its capacity will be the sum of their lengths.
+pub fn smlStrConcat(
+    comptime a: []const u8,
+    comptime b: []const u8,
+) SmlStr(a.len + b.len) {
+    var str = SmlStr(a.len + b.len).ubFrom(a);
+    str.ubPushStr(b);
+    return str;
+}
+
+/// Create a `SmlStr` with a capacity equal to the length of the example string.
+/// The example string is *NOT* copied in.
+pub fn smlStrSizeOf(comptime example: []const u8) SmlStr(example.len) {
+    return SmlStr(example.len).init();
+}
+
 pub const SmlStrError = error{
     /// Operation would overflow `SmlStr` capacity.
     Overflow,

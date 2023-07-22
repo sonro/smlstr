@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+#### Comptime creation functions
+
+- `smlStrFrom` copying a comptime string.
+- `smlStrWith` copying a comptime string with extra space.
+- `smlStrConcat` copying 2 comptime strings.
+- `smlStrSizeOf` with the capacity a comptime string, without copying.
+
 ## [0.1.1] - 2023-07-22
 
 ### Added
