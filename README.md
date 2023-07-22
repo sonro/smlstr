@@ -141,7 +141,7 @@ To add to your Zig project, create a `lib/` directory and either:
 - add it as a git submodule with:
 
   ```bash
-  git submodule add https://github.com/sonro/smlstr.git lib/smlstr
+  git submodule add -b main https://github.com/sonro/smlstr.git lib/smlstr
   ```
 
 Add it as a module in your `build.zig`:
@@ -189,6 +189,12 @@ pub fn main() !void {
     try str.pushStr(", world!");
     std.debug.print("{s}", .{str.slice()});
 }
+```
+
+#### Updating Git Submodule
+
+```bash
+git submodule update --recursive --remote
 ```
 
 ## Contributing
