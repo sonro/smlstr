@@ -10,7 +10,7 @@ const std = @import("std");
 /// - Building an adhoc string without using an allocator.
 /// - Passing a small string around the stack.
 ///
-/// ## Functions
+/// ## Methods
 ///
 /// - `from` to create from an existing string.
 /// - `init` for an empty string.
@@ -89,7 +89,7 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
 
         /// As a string slice.
         ///
-        /// Useful for formatting and coercing into functions
+        /// Useful for formatting and coercing into functions.
         ///
         /// ## Example
         /// ```zig
@@ -123,11 +123,11 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
             self.ubPush(char);
         }
 
-        /// Append a string slice to the `SmlStr`
+        /// Append a string slice to the `SmlStr`.
         ///
         /// ## Errors
         ///
-        /// `SmlStrError.Overflow` string slice won't fit into SmlStr
+        /// `SmlStrError.Overflow` string slice won't fit into SmlStr.
         pub fn pushStr(self: *Self, str: []const u8) SmlStrError!void {
             const newlen = self.len + str.len;
             if (newlen > capacity) return SmlStrError.Overflow;
@@ -135,13 +135,13 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
             self.len = newlen;
         }
 
-        /// Append a formatted string to the `SmlStr`
+        /// Append a formatted string to the `SmlStr`.
         ///
         /// Returns written bytes.
         ///
         /// ## Errors
         ///
-        /// `SmlStrError.Overflow` string slice won't fit into SmlStr
+        /// `SmlStrError.Overflow` string slice won't fit into SmlStr.
         pub fn pushFmt(self: *Self, comptime fmt: []const u8, args: anytype) SmlStrError!usize {
             const written = std.fmt.bufPrint(self.buf[self.len..], fmt, args) catch |err| {
                 switch (err) {
@@ -161,7 +161,7 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
             return self;
         }
 
-        /// Append a single char to the `SmlStr`
+        /// Append a single char to the `SmlStr`.
         ///
         /// Panics on overflow.
         pub fn ubPush(self: *Self, char: u8) void {
@@ -169,7 +169,7 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
             self.len += 1;
         }
 
-        /// Append a string slice to the `SmlStr`
+        /// Append a string slice to the `SmlStr`.
         ///
         /// Panics on overflow.
         pub fn ubPushStr(self: *Self, str: []const u8) void {

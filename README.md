@@ -8,7 +8,7 @@ Small Zig library for working with small strings.
 
 - [Use cases](#use-cases)
 - [Usage](#usage)
-  - [Functions](#functions)
+  - [Methods](#methods)
   - [Error](#errors)
   - [Unbound](#unbound)
   - [Comptime Functions](#comptime-functions)
@@ -42,7 +42,7 @@ fn createDebugString(data: Data) !SmlStr(32) {
 }
 ```
 
-### Functions
+### Methods
 
 - `from` to create from an existing string.
 
@@ -60,7 +60,7 @@ fn createDebugString(data: Data) !SmlStr(32) {
 
   ```zig
   var str = SmlStr(8).init()
-  std.testing.expect(str.len == 0);
+  try std.testing.expect(str.len == 0);
   ```
 
 - `push` to append a single character.
@@ -68,7 +68,7 @@ fn createDebugString(data: Data) !SmlStr(32) {
   ```zig
   var str = SmlStr(4).init()
   try str.push(char);
-  std.testing.expect(str.len == 1);
+  try std.testing.expect(str.len == 1);
   ```
 
 - `pushStr` to append another string.
@@ -76,7 +76,7 @@ fn createDebugString(data: Data) !SmlStr(32) {
   ```zig
   var str = try SmlStr(16).from("hello")
   try str.pushStr(", world");
-  std.testing.expectEqualStrings("hello, world", str.slice());
+  try std.testing.expectEqualStrings("hello, world", str.slice());
   ```
 
 - `pushFmt` to append a formatted string.
@@ -88,7 +88,7 @@ fn createDebugString(data: Data) !SmlStr(32) {
   try std.testing.expectEqualStrings("hello, world", str.slice());
   ```
 
-- `slice` to represent as a `[]const u8`
+- `slice` to represent as a `[]const u8`.
 
   ```zig
   const str = SmlStr(8).from("hi there");
@@ -145,7 +145,7 @@ arguments.
   ```zig
   // appending to this string will cause an overflow error
   const str = smlStrFrom("foobar");
-  std.testing.expectEqualStrings("foobar", str.slice());
+  try std.testing.expectEqualStrings("foobar", str.slice());
   ```
 
 - `smlStrWith` copying an existing string and capacity set to its length +
