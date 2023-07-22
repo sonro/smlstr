@@ -2,7 +2,7 @@ const std = @import("std");
 const testing = std.testing;
 const dbg = std.debug.print;
 
-const SmlStr = @import("smlstr").SmlStr;
+const SmlStr = @import("smlstr.zig").SmlStr;
 
 test "create SmlStr from literal and append" {
     var str = try SmlStr(8).from("12345");
@@ -46,6 +46,22 @@ test "scoped pushStr" {
         try str.pushStr(&tmpstr);
     }
     try testing.expectEqualStrings("01234", str.slice());
+}
+
+test "append format string" {
+    var str = SmlStr(64).init();
+    const written = try str.pushFmt("test {s}", .{"string"});
+    try testing.expectEqualStrings("test string", str.slice());
+    try testing.expect(11 == written);
+}
+
+test "append format string with error" {
+    var str = SmlStr(4).init();
+    try testing.expectError(
+        error.Overflow,
+        str.pushFmt("test {s}", .{"string"}),
+    );
+    try testing.expectEqualStrings("", str.slice());
 }
 
 // UNCOMMENT TO TEST PANICS

@@ -1,3 +1,5 @@
+const std = @import("std");
+
 /// Small string buffer where `capacity` is fixed.
 ///
 /// `capacity` must be `> 1`.
@@ -14,6 +16,7 @@
 /// - `init` for an empty string.
 /// - `push` to append a single character.
 /// - `pushStr` to append another string.
+/// - `pushFmt` to append a formatted string.
 /// - `slice` to represent as a `[]const u8`
 ///
 ///
@@ -121,6 +124,23 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
             const newlen = self.len + str.len;
             if (newlen > capacity) return SmlStrError.Overflow;
             self.ubPushStr(str);
+        }
+
+        /// Append a formatted string to the `SmlStr`
+        ///
+        /// Returns written bytes.
+        ///
+        /// ## Errors
+        ///
+        /// `SmlStrError.Overflow` string slice won't fit into SmlStr
+        pub fn pushFmt(self: *Self, comptime fmt: []const u8, args: anytype) SmlStrError!usize {
+            const written = std.fmt.bufPrint(self.buf[self.len..], fmt, args) catch |err| {
+                switch (err) {
+                    std.fmt.BufPrintError.NoSpaceLeft => return SmlStrError.Overflow,
+                }
+            };
+            self.len += written.len;
+            return written.len;
         }
 
         /// Create a `SmlStr` from copying an existing string.

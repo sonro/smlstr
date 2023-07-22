@@ -10,7 +10,6 @@ Small Zig library for working with small strings.
 - Constructing a string where max-size is known.
 - Building an adhoc string without using an allocator.
 - Passing a small string around the stack.
-- No standard library environment.
 
 If you require a large string, or you want to dynamically grow the underlying
 string buffer, the Zig standard library's
@@ -67,6 +66,15 @@ fn createDebugString(data: Data) !SmlStr(32) {
   var str = try SmlStr(16).from("hello")
   try str.pushStr(", world");
   std.testing.expectEqualStrings("hello, world", str.slice());
+  ```
+
+- `pushFmt` to append a formatted string.
+
+  ```zig
+  var str = try SmlStr(64).init();
+  const written = try str.pushFmt("hello, {s}", .{"world"});
+  try std.testing.expect(11 == written);
+  try std.testing.expectEqualStrings("hello, world", str.slice());
   ```
 
 - `slice` to represent as a `[]const u8`
