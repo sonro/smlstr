@@ -12,7 +12,7 @@ Small Zig library for working with small strings.
 - Passing a small string around the stack.
 
 If you require a large string, or you want to dynamically grow the underlying
-string buffer, the Zig standard library's
+string buffer, use the Zig standard library's
 [`ArrayList(u8)`](https://ziglang.org/documentation/master/std/#A;std:ArrayList).
 
 ## Usage
