@@ -26,8 +26,40 @@ test "create SmlStr with error" {
     try testing.expectError(error.Overflow, SmlStr(4).from("12345"));
 }
 
-test "append SmlStr with error" {
+test "append char to SmlStr with error" {
     var str = SmlStr(1).init();
     try str.push('c');
     try testing.expectError(error.Overflow, str.push('c'));
 }
+
+test "append str to SmlStr with error" {
+    var str = SmlStr(1).init();
+    try str.push('c');
+    try testing.expectError(error.Overflow, str.pushStr("s"));
+}
+
+test "scoped pushStr" {
+    var str = SmlStr(8).init();
+    {
+        var tmpstr: [5]u8 = undefined;
+        for (0..5) |i| tmpstr[i] = @as(u8, @truncate(i)) + '0';
+        try str.pushStr(&tmpstr);
+    }
+    try testing.expectEqualStrings("01234", str.slice());
+}
+
+// UNCOMMENT TO TEST PANICS
+
+// test "unbound from panics" {
+//     _ = SmlStr(4).ubFrom("12345");
+// }
+
+// test "unbound push panics" {
+//     var str = try SmlStr(1).from("0");
+//     str.push('1');
+// }
+
+// test "unbound pushStr panics" {
+//     var str = try SmlStr(1).from("0");
+//     str.push("string");
+// }
