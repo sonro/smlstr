@@ -19,7 +19,6 @@ const std = @import("std");
 /// - `pushFmt` to append a formatted string.
 /// - `slice` to represent as a `[]const u8`
 ///
-///
 /// ## Errors
 ///
 /// `SmlStrError.Overflow` -  If creating or pushing would overflow
@@ -43,6 +42,15 @@ const std = @import("std");
 /// try str.push(',');
 /// try str.pushStr(" world!");
 /// print("{s}", .{str.slice()});
+/// ```
+///
+/// ### Formatting
+///
+/// ```zig
+/// var str = SmlStr(64).init();
+/// for (0..32) |i| {
+///     _ = try str.pushFmt("{}", .{i});
+/// }
 /// ```
 ///
 /// ### Conditional string building
