@@ -1,9 +1,18 @@
 # smlstr
 
-[![GitHub](https://img.shields.io/github/license/sonro/smlstr)](https://github.com/sonro/smlstr/blob/main/LICENSE)
+[![licence: MIT](https://img.shields.io/github/license/sonro/smlstr)](https://github.com/sonro/smlstr/blob/main/LICENSE)
 [![release](https://img.shields.io/github/v/release/sonro/smlstr)](https://github.com/sonro/smlstr/releases/latest)
 
 Small Zig library for working with small strings.
+
+- [Use cases](#use-cases)
+- [Usage](#usage)
+  - [Functions](#functions)
+  - [Error](#errors)
+  - [Unbound](#unbound)
+  - [Importing into a Zig project](#importing-into-a-zig-project)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Use Cases
 
@@ -87,12 +96,12 @@ fn createDebugString(data: Data) !SmlStr(32) {
   var words = std.mem.splitScalar(u8, str.slice(), ' ');
   ```
 
-#### Errors
+### Errors
 
 `SmlStrError.Overflow` -  If creating or pushing would overflow
 the internal buffer.
 
-#### Unbound
+### Unbound
 
 `from`, `push` and `pushStr` have unbound versions which will not error:
 
@@ -103,7 +112,7 @@ the internal buffer.
 These will cause a panic if they overflow the buffer, useful if you know that's
 not possible.
 
-### Full Example
+#### Unbound example
 
 ```zig
 const FILE_CHAR = "abcdefgh";
@@ -124,7 +133,7 @@ fn idxFileRankStr(idx: usize) SmlStr(2) {
 }
 ```
 
-## Importing into a Zig Project
+### Importing into a Zig Project
 
 To add to your Zig project, create a `lib/` directory and either:
 
