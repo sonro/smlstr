@@ -30,12 +30,14 @@ test "append char to SmlStr with error" {
     var str = SmlStr(1).init();
     try str.push('c');
     try testing.expectError(error.Overflow, str.push('c'));
+    try testing.expectEqualStrings("c", str.slice());
 }
 
 test "append str to SmlStr with error" {
     var str = SmlStr(1).init();
     try str.push('c');
     try testing.expectError(error.Overflow, str.pushStr("s"));
+    try testing.expectEqualStrings("c", str.slice());
 }
 
 test "scoped pushStr" {
