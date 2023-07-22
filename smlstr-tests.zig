@@ -5,9 +5,10 @@ const dbg = std.debug.print;
 const SmlStr = @import("smlstr.zig").SmlStr;
 
 test "create SmlStr from literal and append" {
-    var str = try SmlStr(8).from("12345");
-    try str.push('6');
-    try str.pushStr("78");
+    var str = try SmlStr(8).from("123");
+    try str.push('4');
+    try str.pushStr("56");
+    _ = try str.pushFmt("{s}", .{"78"});
     try testing.expectEqualStrings("12345678", str.slice());
 }
 
