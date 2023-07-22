@@ -2,6 +2,7 @@
 
 [![licence: MIT](https://img.shields.io/github/license/sonro/smlstr)](https://github.com/sonro/smlstr/blob/main/LICENSE)
 [![release](https://img.shields.io/github/v/release/sonro/smlstr)](https://github.com/sonro/smlstr/releases/latest)
+[![tests](https://img.shields.io/github/actions/workflow/status/sonro/smlstr/tests.yml?logo=Zig&label=tests)](https://github.com/sonro/smlstr/actions/workflows/tests.yml)
 
 Small Zig library for working with small strings.
 
