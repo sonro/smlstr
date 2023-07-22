@@ -2,7 +2,7 @@ const std = @import("std");
 const testing = std.testing;
 const dbg = std.debug.print;
 
-const SmlStr = @import("smlstr.zig").SmlStr;
+const SmlStr = @import("smlstr").SmlStr;
 
 test "create SmlStr from literal and append" {
     var str = try SmlStr(8).from("12345");

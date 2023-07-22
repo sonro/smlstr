@@ -13,18 +13,20 @@ pub fn build(b: *std.Build) void {
     b.installArtifact(lib);
 
     // Expose to dependents
-    _ = b.addModule("smlstr", .{
+    const module = b.addModule("smlstr", .{
         .source_file = .{ .path = "smlstr.zig" },
         .dependencies = &.{},
     });
 
     // tests
-    const main_tests = b.addTest(.{
+    const tests = b.addTest(.{
         .root_source_file = .{ .path = "smlstr-tests.zig" },
         .target = target,
         .optimize = optimize,
     });
-    const run_main_tests = b.addRunArtifact(main_tests);
+    tests.addModule("smlstr", module);
+
+    const run_main_tests = b.addRunArtifact(tests);
     const test_step = b.step("test", "Run library tests");
     test_step.dependOn(&run_main_tests.step);
 }
