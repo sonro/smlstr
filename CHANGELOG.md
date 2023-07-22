@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2023-07-22
+
 ### Added
 
 #### Comptime creation functions
@@ -14,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `smlStrFrom` copying a comptime string.
 - `smlStrWith` copying a comptime string with extra space.
 - `smlStrConcat` copying 2 comptime strings.
-- `smlStrSizeOf` with the capacity a comptime string, without copying.
+- `smlStrSizeOf` with the capacity from a comptime string, without copying.
 
 ## [0.1.1] - 2023-07-22
 
@@ -37,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Overflow error.
 
-[Unreleased]: https://github.com/sonro/smlstr/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/sonro/smlstr/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/sonro/smlstr/releases/tag/v0.1.2
 [0.1.1]: https://github.com/sonro/smlstr/releases/tag/v0.1.1
 [0.1.0]: https://github.com/sonro/smlstr/releases/tag/v0.1.0
