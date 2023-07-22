@@ -1,0 +1,2 @@
+# for zig ci
+*.zig text eol=lf
