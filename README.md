@@ -1,5 +1,8 @@
 # smlstr
 
+[![GitHub](https://img.shields.io/github/license/sonro/smlstr)](https://github.com/sonro/smlstr/blob/main/LICENSE)
+[![release](https://img.shields.io/github/v/release/sonro/smlstr)](https://github.com/sonro/smlstr/releases/latest)
+
 Small Zig library for working with small strings.
 
 ## Use Cases
