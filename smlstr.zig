@@ -123,7 +123,8 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
         pub fn pushStr(self: *Self, str: []const u8) SmlStrError!void {
             const newlen = self.len + str.len;
             if (newlen > capacity) return SmlStrError.Overflow;
-            self.ubPushStr(str);
+            @memcpy(self.buf[self.len..newlen], str);
+            self.len = newlen;
         }
 
         /// Append a formatted string to the `SmlStr`
