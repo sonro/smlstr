@@ -7,8 +7,8 @@ const std = @import("std");
 /// ## Uses
 ///
 /// - Constructing a string where max-size is known.
+/// - Building an adhoc string without using an allocator.
 /// - Passing a small string around the stack.
-/// - No standard library environment.
 ///
 /// ## Functions
 ///
