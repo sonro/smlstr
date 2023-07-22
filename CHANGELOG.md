@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `pushFmt` method to append a formated string to `SmlStr`
+- `pushFmt` method to append a formatted string to `SmlStr`
 
 ## [0.1.0] - 2023-07-22
 
