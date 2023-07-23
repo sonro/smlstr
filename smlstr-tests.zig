@@ -13,7 +13,7 @@ test "create SmlStr from literal and append" {
     var str = try SmlStr(8).from("123");
     try str.push('4');
     try str.pushStr("56");
-    _ = try str.pushFmt("{s}", .{"78"});
+    try str.pushFmt("{s}", .{"78"});
     try testing.expectEqualStrings("12345678", str.slice());
 }
 
@@ -58,9 +58,8 @@ test "scoped pushStr" {
 
 test "append format string" {
     var str = SmlStr(64).init();
-    const written = try str.pushFmt("test {s}", .{"string"});
+    try str.pushFmt("test {s}", .{"string"});
     try testing.expectEqualStrings("test string", str.slice());
-    try testing.expect(11 == written);
 }
 
 test "append format string with error" {

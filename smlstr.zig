@@ -49,7 +49,7 @@ const std = @import("std");
 /// ```zig
 /// var str = SmlStr(64).init();
 /// for (0..32) |i| {
-///     _ = try str.pushFmt("{}", .{i});
+///     try str.pushFmt("{}", .{i});
 /// }
 /// ```
 ///
@@ -137,19 +137,16 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
 
         /// Append a formatted string to the `SmlStr`.
         ///
-        /// Returns written bytes.
-        ///
         /// ## Errors
         ///
         /// `SmlStrError.Overflow` string slice won't fit into SmlStr.
-        pub fn pushFmt(self: *Self, comptime fmt: []const u8, args: anytype) SmlStrError!usize {
+        pub fn pushFmt(self: *Self, comptime fmt: []const u8, args: anytype) SmlStrError!void {
             const written = std.fmt.bufPrint(self.buf[self.len..], fmt, args) catch |err| {
                 switch (err) {
                     std.fmt.BufPrintError.NoSpaceLeft => return SmlStrError.Overflow,
                 }
             };
             self.len += written.len;
-            return written.len;
         }
 
         /// Create a `SmlStr` from copying an existing string.

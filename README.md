@@ -83,8 +83,7 @@ fn createDebugString(data: Data) !SmlStr(32) {
 
   ```zig
   var str = try SmlStr(64).init();
-  const written = try str.pushFmt("hello, {s}", .{"world"});
-  try std.testing.expect(11 == written);
+  try str.pushFmt("hello, {s}", .{"world"});
   try std.testing.expectEqualStrings("hello, world", str.slice());
   ```
 
