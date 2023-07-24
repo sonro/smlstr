@@ -13,6 +13,8 @@ Small Zig library for working with small strings.
   - [Unbound](#unbound)
   - [Comptime Functions](#comptime-functions)
   - [Importing into a Zig project](#importing-into-a-zig-project)
+    - [Package Manager](#zig-package-manager)
+    - [Download Source](#download-source)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -38,7 +40,7 @@ Example in a function return type:
 
 ```zig
 fn createDebugString(data: Data) !SmlStr(32) {
-    ...
+
 }
 ```
 
@@ -187,48 +189,9 @@ arguments.
 
 ### Importing into a Zig Project
 
-To add to your Zig project, create a `lib/` directory and either:
-
-- download this repo straight into `lib/smlstr`
-- add it as a git submodule with:
-
-  ```bash
-  git submodule add -b main https://github.com/sonro/smlstr.git lib/smlstr
-  ```
-
-Add it as a module in your `build.zig`:
-
-```diff
- // build.zig
- const std = @import("std");
-
- pub fn build(b: *std.Build) void {
-...
- 
-+    const smlstr_mod = b.addModule("shared", .{ .source_file = .{
-+       .path = "lib/smlstr/smlstr.zig",
-+    } });
-...
-
-     // executable
-     const exe = b.addExecutable(.{
-        ...
-     });
-
-
-+    exe.addModule("smlstr", smlstr_mod);
-...
-
-     // tests
-     const unit_tests = b.addTest(.{
-        ...
-     });
-
-+    unit_tests.addModule("smlstr", smlstr_mod);
-...
-```
-
-Make sure you use it to test it's working:
+To add this library to your project, either use Zig's internal package manager,
+or download the source code (direct or git submodule). Then `@import` it
+into your code to make sure it's working:
 
 ```zig
 // main.zig
@@ -243,7 +206,116 @@ pub fn main() !void {
 }
 ```
 
+#### Zig Package Manager
+
+1. Add a `build.zig.zon` file to your project root:
+
+    ```zig
+    // build.zig.zon
+    .{
+        // the name of your project
+        .name = "barfighter",
+        .version = "0.1.0",
+
+        .dependencies = .{
+            // the name of the package
+            .smlstr = .{
+                // the url to the release of the module
+                .url = "https://github.com/sonro/smlstr/archive/refs/tags/v0.2.1.tar.gz",
+                // the hash of the module, this is not the checksum of the tarball
+                .hash = "122054069f8488d6bb5b2214545c7659cd82ee08f728ced86c89365963d9ee7c3c11",
+            },
+            // ... other dependencies
+        },
+    }
+    ```
+
+2. Update your `build.zig` to add the library and module:
+
+    ```diff
+    // build.zig
+    const std = @import("std");
+
+    pub fn build(b: *std.Build) void {
+    ...
+
+    +    const smlstr = b.dependency("smlstr", .{
+    +        .target = target,
+    +        .optimize = optimize,
+    +    });
+    +    const smlstr_mod = smlstr.module("smlstr");
+
+        // executable
+        const exe = b.addExecutable(.{
+            ...
+        });
+
+    +    exe.addModule("smlstr", smlstr_mod);
+    +    exe.linkLibrary(smlstr.artifact("smlstr"));
+
+        b.installArtifact(exe);
+    ...
+
+        // tests
+        const unit_tests = b.addTest(.{
+            ...
+        });
+
+    +    unit_tests.addModule("smlstr", smlstr_mod);
+
+        const run_unit_tests = b.addRunArtifact(unit_tests);
+    ...
+    ```
+
+#### Download Source
+
+1. Create a `lib` directory in your project root.
+
+2. Either:
+    - Direct download this repo into `lib/smlstr`.
+    - Or add it as a git submodule with:
+
+    ```bash
+    git submodule add -b main https://github.com/sonro/smlstr.git lib/smlstr
+    ```
+
+3. Add it as a module in your `build.zig`:
+
+    ```diff
+    // build.zig
+    const std = @import("std");
+
+    pub fn build(b: *std.Build) void {
+    ...
+    
+    +    const smlstr_mod = b.addModule("shared", .{ .source_file = .{
+    +       .path = "lib/smlstr/smlstr.zig",
+    +    } });
+    ...
+
+        // executable
+        const exe = b.addExecutable(.{
+            ...
+        });
+
+
+    +    exe.addModule("smlstr", smlstr_mod);
+    ...
+
+        // tests
+        const unit_tests = b.addTest(.{
+            ...
+        });
+
+    +    unit_tests.addModule("smlstr", smlstr_mod);
+
+         const run_unit_tests = b.addRunArtifact(unit_tests);
+    ...
+    ```
+
 #### Updating Git Submodule
+
+You can pull main branch again to update.
 
 ```bash
 git submodule update --recursive --remote
