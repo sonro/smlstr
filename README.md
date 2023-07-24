@@ -12,9 +12,9 @@ Small Zig library for working with small strings.
   - [Error](#errors)
   - [Unbound](#unbound)
   - [Comptime Functions](#comptime-functions)
-  - [Importing into a Zig project](#importing-into-a-zig-project)
-    - [Package Manager](#zig-package-manager)
-    - [Download Source](#download-source)
+- [Importing into a Zig project](#importing-into-a-zig-project)
+  - [Package Manager](#zig-package-manager)
+  - [Download Source](#download-source)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -187,7 +187,7 @@ arguments.
   try std.testing.expectEqualStrings("Luke Skywalker", str.slice());
   ```
 
-### Importing into a Zig Project
+## Importing into a Zig Project
 
 To add this library to your project, either use Zig's internal package manager,
 or download the source code (direct or git submodule). Then `@import` it
@@ -206,7 +206,7 @@ pub fn main() !void {
 }
 ```
 
-#### Zig Package Manager
+### Zig Package Manager
 
 1. Add a `build.zig.zon` file to your project root:
 
@@ -266,7 +266,7 @@ pub fn main() !void {
      ...
     ```
 
-#### Download Source
+### Download Source
 
 1. Create a `lib` directory in your project root.
 
