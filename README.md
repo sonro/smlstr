@@ -40,7 +40,7 @@ Example in a function return type:
 
 ```zig
 fn createDebugString(data: Data) !SmlStr(32) {
-
+    ...
 }
 ```
 
