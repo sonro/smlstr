@@ -39,6 +39,20 @@ test "append char to SmlStr with error" {
     try testing.expectEqualStrings("c", str.slice());
 }
 
+test "pop char from empty SmlStr" {
+    var str = SmlStr(8).init();
+    try testing.expect(null == str.pop());
+}
+
+test "pop char from full SmlStr" {
+    var str = smlStrFrom("test");
+    try testing.expect('t' == str.pop());
+    try testing.expect(3 == str.len);
+    try testing.expect('s' == str.pop());
+    try testing.expect(2 == str.len);
+    try testing.expectEqualStrings("te", str.slice());
+}
+
 test "append str to SmlStr with error" {
     var str = SmlStr(1).init();
     try str.push('c');

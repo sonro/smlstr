@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `pop` method to remove the last character from `SmlStr`.
+
 ## Changed
 
 - Module added to library artifact to ensure dependents can access.

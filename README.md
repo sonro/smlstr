@@ -63,6 +63,16 @@ fn createDebugString(data: Data) !SmlStr(32) {
   try std.testing.expect(str.len == 0);
   ```
 
+- `pop` to remove the last character.
+
+  ```zig
+  var str = try SmlStr(4).from("a")
+  try std.testing.expect('a' == str.pop());
+  std.testing.expect(0 == str.len);
+  // Returns `null` when `len` is `0`.
+  try std.testing.expect(null == str.pop());
+  ```
+
 - `push` to append a single character.
 
   ```zig

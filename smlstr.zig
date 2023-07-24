@@ -14,6 +14,7 @@ const std = @import("std");
 ///
 /// - `from` to create from an existing string.
 /// - `init` for an empty string.
+/// - `pop` to remove the last character.
 /// - `push` to append a single character.
 /// - `pushStr` to append another string.
 /// - `pushFmt` to append a formatted string.
@@ -74,6 +75,7 @@ const std = @import("std");
 /// }
 /// ```
 pub fn SmlStr(comptime capacity: comptime_int) type {
+    std.debug.assert(capacity > 0);
     return struct {
         /// Internal buffer
         buf: [capacity]u8 = undefined,
@@ -111,6 +113,14 @@ pub fn SmlStr(comptime capacity: comptime_int) type {
         pub fn from(str: []const u8) SmlStrError!Self {
             if (str.len > capacity) return SmlStrError.Overflow;
             return Self.ubFrom(str);
+        }
+
+        /// Remove the last char from the `SmlStr`.
+        /// Returns the removed char or null if empty.
+        pub fn pop(self: *Self) ?u8 {
+            if (self.len == 0) return null;
+            self.len -= 1;
+            return self.buf[self.len];
         }
 
         /// Append a single char to the `SmlStr`
