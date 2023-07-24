@@ -233,38 +233,37 @@ pub fn main() !void {
 2. Update your `build.zig` to add the library and module:
 
     ```diff
-    // build.zig
-    const std = @import("std");
+     // build.zig
+     const std = @import("std");
 
-    pub fn build(b: *std.Build) void {
-    ...
-
+     pub fn build(b: *std.Build) void {
+     ...
     +    const smlstr = b.dependency("smlstr", .{
     +        .target = target,
     +        .optimize = optimize,
     +    });
     +    const smlstr_mod = smlstr.module("smlstr");
 
-        // executable
-        const exe = b.addExecutable(.{
-            ...
-        });
+         // executable
+         const exe = b.addExecutable(.{
+             ...
+         });
 
     +    exe.addModule("smlstr", smlstr_mod);
     +    exe.linkLibrary(smlstr.artifact("smlstr"));
 
-        b.installArtifact(exe);
-    ...
+         b.installArtifact(exe);
+     ...
 
-        // tests
-        const unit_tests = b.addTest(.{
-            ...
-        });
+         // tests
+         const unit_tests = b.addTest(.{
+             ...
+         });
 
     +    unit_tests.addModule("smlstr", smlstr_mod);
 
-        const run_unit_tests = b.addRunArtifact(unit_tests);
-    ...
+         const run_unit_tests = b.addRunArtifact(unit_tests);
+     ...
     ```
 
 #### Download Source
@@ -282,26 +281,24 @@ pub fn main() !void {
 3. Add it as a module in your `build.zig`:
 
     ```diff
-    // build.zig
-    const std = @import("std");
+     // build.zig
+     const std = @import("std");
 
-    pub fn build(b: *std.Build) void {
-    ...
-    
+     pub fn build(b: *std.Build) void {
+     ...
     +    const smlstr_mod = b.addModule("shared", .{ .source_file = .{
     +       .path = "lib/smlstr/smlstr.zig",
     +    } });
-    ...
 
-        // executable
-        const exe = b.addExecutable(.{
-            ...
-        });
-
+         // executable
+         const exe = b.addExecutable(.{
+             ...
+         });
 
     +    exe.addModule("smlstr", smlstr_mod);
+    
+         b.installArtifact(exe);
     ...
-
         // tests
         const unit_tests = b.addTest(.{
             ...
