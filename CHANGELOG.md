@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Changed
+
+- Module added to library artifact to ensure dependents can access.
+
 ## [0.2.0] - 2023-07-23
 
 ## Changed

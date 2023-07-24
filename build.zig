@@ -4,19 +4,20 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
+    // Expose to dependents
+    const module = b.addModule("smlstr", .{
+        .source_file = .{ .path = "smlstr.zig" },
+        .dependencies = &.{},
+    });
+
     const lib = b.addStaticLibrary(.{
         .name = "smlstr",
         .root_source_file = .{ .path = "smlstr.zig" },
         .target = target,
         .optimize = optimize,
     });
+    lib.addModule("smlstr", module);
     b.installArtifact(lib);
-
-    // Expose to dependents
-    const module = b.addModule("smlstr", .{
-        .source_file = .{ .path = "smlstr.zig" },
-        .dependencies = &.{},
-    });
 
     // tests
     const tests = b.addTest(.{
