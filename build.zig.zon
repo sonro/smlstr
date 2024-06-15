@@ -1,4 +1,14 @@
 .{
     .name = "smlstr",
     .version = "0.2.1",
+    .minimum_zig_version = "0.13.0",
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "smlstr.zig",
+        "smlstr.zig.zon",
+        "LICENSE",
+        "README.md",
+        "CHANGELOG.md",
+    },
 }

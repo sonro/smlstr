@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Changed
+
+- [**BREAKING**] Build system updated to Zig version 0.13.0
+
 ## [0.2.1] - 2023-07-24
 
 ### Added

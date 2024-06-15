@@ -6,26 +6,26 @@ pub fn build(b: *std.Build) void {
 
     // Expose to dependents
     const module = b.addModule("smlstr", .{
-        .source_file = .{ .path = "smlstr.zig" },
-        .dependencies = &.{},
+        .root_source_file = b.path("smlstr.zig"),
+        .target = target,
+        .optimize = optimize,
     });
 
     const lib = b.addStaticLibrary(.{
         .name = "smlstr",
-        .root_source_file = .{ .path = "smlstr.zig" },
+        .root_source_file = b.path("smlstr.zig"),
         .target = target,
         .optimize = optimize,
     });
-    lib.addModule("smlstr", module);
     b.installArtifact(lib);
 
     // tests
     const tests = b.addTest(.{
-        .root_source_file = .{ .path = "smlstr-tests.zig" },
+        .root_source_file = b.path("smlstr-tests.zig"),
         .target = target,
         .optimize = optimize,
     });
-    tests.addModule("smlstr", module);
+    tests.root_module.addImport("smlstr", module);
 
     const run_main_tests = b.addRunArtifact(tests);
     const test_step = b.step("test", "Run library tests");
