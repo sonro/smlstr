@@ -26,7 +26,7 @@ Small Zig library for working with small strings.
 
 If you require a large string, or you want to dynamically grow the underlying
 string buffer, use the Zig standard library's
-[`ArrayList(u8)`](https://ziglang.org/documentation/master/std/#A;std:ArrayList).
+[`ArrayList(u8)`](https://ziglang.org/documentation/master/std/#std.array_list.ArrayList).
 
 ## Usage
 
